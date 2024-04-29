@@ -1,3 +1,7 @@
+package entities;
+
+import exceptions.SaldoInsuficienteException;
+import services.IConta;
 
 public abstract class Conta implements IConta {
 	
@@ -17,7 +21,11 @@ public abstract class Conta implements IConta {
 
 	@Override
 	public void sacar(double valor) {
-		saldo -= valor;
+		if (valor > saldo) {
+			throw new SaldoInsuficienteException("Saldo insuficiente."); 
+		} else {
+			saldo -= (valor * 0.05); // taxa de saque padrao de 5%
+		}
 	}
 
 	@Override
